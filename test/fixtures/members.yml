@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_id: 1
+  rarerity: 1
+  birthday: MyString
+  grade: MyString
+  piece1: MyString
+  piece2: MyString
+  piece3: MyString
+  piece4: MyString
+  bonus: MyString
+  ability: MyString
+  costume: MyString
+
+two:
+  card_id: 1
+  rarerity: 1
+  birthday: MyString
+  grade: MyString
+  piece1: MyString
+  piece2: MyString
+  piece3: MyString
+  piece4: MyString
+  bonus: MyString
+  ability: MyString
+  costume: MyString
