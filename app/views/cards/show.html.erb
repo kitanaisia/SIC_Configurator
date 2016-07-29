@@ -1,4 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_card_path(@card) %> |
+<img src=<%= @card.img %>>
+
+<p>
+  <strong>カードID</strong>
+  <%= @card.number%>
+</p>
+
+<p>
+  <strong>カード名</strong>
+  <%= @card.name%>
+</p>
+
+<p>
+  <strong>フレーバーテキスト</strong>
+  <%= @card.skill%>
+</p>
+
 <%= link_to 'Back', cards_path %>

@@ -12,6 +12,7 @@
   <tbody>
     <% @cards.each do |card| %>
       <tr>
+        <td><%= link_to '選択', card %></td>
         <td><%= card.number %></td>
         <td><%= card.name %></td>
         <td><%= card.skill %></td>
