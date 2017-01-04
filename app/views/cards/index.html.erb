@@ -2,6 +2,8 @@
 
 <h1>Cards</h1>
 
+<%= page_entries_info @cards %>
+
 <table>
   <thead>
     <tr>
@@ -20,5 +22,7 @@
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @cards %>
 
 <br>
