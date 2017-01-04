@@ -3,24 +3,20 @@
 <h1>Cards</h1>
 
 <%= page_entries_info @cards %>
+<br>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @cards.each do |card| %>
-      <tr>
-        <td><%= link_to '選択', card %></td>
-        <td><%= card.number %></td>
-        <td><%= card.name %></td>
-        <td><%= card.skill %></td>
-      </tr>
-    <% end %>
-  </tbody>
+<table class="table table-striped">
+<tbody>
+  <% @cards.each do |card| %>
+  <tr>
+    <div style="display:inline-block;vertical-align:top;">
+        <div><img src=<%= card.img %>></div>
+        <div><%= card.number%><%= card.name %></div>
+        <div><%= link_to '選択', card %></div>
+    <div>
+  </tr>
+  <% end %>
+</tbody>
 </table>
 
 <%= will_paginate @cards %>
