@@ -52,3 +52,6 @@ gem 'honoka-rails'
 
 # paginate
 gem 'will_paginate'
+
+# User authentication
+gem 'devise'
