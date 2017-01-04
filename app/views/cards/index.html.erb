@@ -5,20 +5,16 @@
 <%= page_entries_info @cards %>
 <br>
 
-<table class="table table-striped">
-<tbody>
+<div>
   <% @cards.each do |card| %>
-  <tr>
-    <div style="display:inline-block;vertical-align:top;">
+    <div style="display:inline-block;vertical-align:top;width:200px;" >
       <%= link_to card do %>
         <div><img src=<%= card.img %>></div>
-        <div><%= card.number%><%= card.name %></div>
+        <div><%= card.number%> <%= card.name %></div>
       <% end %>
-    <div>
-  </tr>
+    </div>
   <% end %>
-</tbody>
-</table>
+</div>
 
 <%= will_paginate @cards %>
 
