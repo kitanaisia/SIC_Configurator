@@ -10,9 +10,10 @@
   <% @cards.each do |card| %>
   <tr>
     <div style="display:inline-block;vertical-align:top;">
+      <%= link_to card do %>
         <div><img src=<%= card.img %>></div>
         <div><%= card.number%><%= card.name %></div>
-        <div><%= link_to '選択', card %></div>
+      <% end %>
     <div>
   </tr>
   <% end %>
