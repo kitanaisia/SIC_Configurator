@@ -7,7 +7,7 @@ class CardsController < ApplicationController
     @cards = Card.all
 
     # 検索用のセレクトボックスに表示する、名前一覧
-    @name_list = @cards.select(:name).distinct
+    @name_list = @cards.select(:name).order(:name).distinct
 
     # 表示対象のカード
     if params[:name].present?
