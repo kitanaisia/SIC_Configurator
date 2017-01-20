@@ -4,8 +4,19 @@ class CardsController < ApplicationController
   # GET /cards
   # GET /cards.json
   def index
-    # @cards = Card.all
-    @cards = Card.order(:number).page(params[:page])
+    @cards = Card.all
+
+    # 検索用のセレクトボックスに表示する、名前一覧
+    @name_list = @cards.select(:name).order(:name).distinct
+
+    # 表示対象のカード
+    if params[:name].present?
+      @cards = @cards.get_by_name(params[:name])
+    end
+    if params[:rarity].present?
+      @cards = @cards.get_by_rarity(params[:rarity])
+    end
+    @cards = @cards.order(:number).page(params[:page])
   end
 
   # GET /cards/1

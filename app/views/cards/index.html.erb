@@ -2,6 +2,12 @@
 
 <h1>Cards</h1>
 
+<%= form_tag cards_path, :method => 'get' do %>
+  <%= label_tag :name, "カード名" %>
+  <%= select_tag :name, options_from_collection_for_select(@name_list, :name, :name) %>
+  <%= submit_tag "検索" %>
+<% end %>
+
 <%= page_entries_info @cards %>
 <br>
 
