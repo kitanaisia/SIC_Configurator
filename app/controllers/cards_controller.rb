@@ -5,6 +5,8 @@ class CardsController < ApplicationController
   # GET /cards.json
   def index
     @cards = Card.all
+    # p hoge = Member.joins(:card).select("cards.*, members.*").first
+    # p hoge.name
 
     # 検索用のセレクトボックスに表示する、名前一覧
     @name_list = @cards.select(:name).order(:name).distinct
