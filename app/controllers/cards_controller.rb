@@ -5,6 +5,11 @@ class CardsController < ApplicationController
   # GET /cards.json
   def index
     @cards = Card.all
+
+    # 検索用のセレクトボックスに表示する、名前一覧
+    @name_list = @cards.select(:name).distinct
+
+    # 表示対象のカード
     if params[:name].present?
       @cards = @cards.get_by_name(params[:name])
     end
