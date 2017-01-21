@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Musics</h1>
+
+<%= page_entries_info @musics %>
+<br>
+
+<div>
+  <% @musics.each do |music| %>
+    <div style="display:inline-block;vertical-align:top;width:200px;" >
+      <%= link_to music do %>
+        <div><img src=<%= music.img %>></div>
+        <div><%= music.number%> <%= music.name %></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= will_paginate @musics, :renderer => BootstrapPagination::Rails %>
+<br>
+
+<%= link_to 'New Music', new_music_path %>

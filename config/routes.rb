@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   root 'members#index'
   resources :cards
   resources :members
+  resources :musics
 end
