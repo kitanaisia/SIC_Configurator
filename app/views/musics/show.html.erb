@@ -1,4 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_music_path(@music) %> |
+<img src=<%= @music.img %>>
+
+<p>
+  <strong>カードID</strong>
+  <%= @music.number%>
+</p>
+
+<p>
+  <strong>カード名</strong>
+  <%= @music.name%>
+</p>
+
+<p>
+  <strong>フレーバーテキスト</strong>
+  <%= @music.skill%>
+</p>
+
 <%= link_to 'Back', musics_path %>

@@ -78,12 +78,11 @@ class MembersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @member = Member.find(params[:id])
+      @member = Member.joins(:card).select("cards.*, members.*").find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
       params.fetch(:member, {})
-      params.require(:search).permit(:name, :rarity) # strong parameters
     end
 end

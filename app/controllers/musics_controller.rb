@@ -64,7 +64,7 @@ class MusicsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_music
-      @music = Music.find(params[:id])
+      @music = Music.joins(:card).select("cards.*, musics.*").find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
