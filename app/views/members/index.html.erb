@@ -3,8 +3,8 @@
 <h1>Members</h1>
 
 <%= form_for @search_form, as: 'search', url: :members, html: {method: :get} do |f| %>
-  <%= f.collection_select :name, @name_list, :name, :name %>
-  <%= f.collection_select :rarity, @rarity_list, :rarity, :rarity %>
+  <%= f.collection_select :name, @name_list, :name, :name, :include_blank => true %>
+  <%= f.collection_select :rarity, @rarity_list, :rarity, :rarity, :include_blank => true %>
 
   <%= f.submit "検索" %>
 <% end %>
