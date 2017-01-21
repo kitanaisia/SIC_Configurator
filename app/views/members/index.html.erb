@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Members</h1>
+
+<%= form_tag members_path, :method => 'get' do %>
+  <%= label_tag :name, "カード名" %>
+  <%= select_tag :name, options_from_collection_for_select(@name_list, :name, :name) %>
+  <%= submit_tag "検索" %>
+<% end %>
+
+<%= page_entries_info @members %>
+<br>
+
+<div>
+  <% @members.each do |member| %>
+    <div style="display:inline-block;vertical-align:top;width:200px;" >
+      <%= link_to member do %>
+        <div><img src=<%= member.img %>></div>
+        <div><%= member.number%> <%= member.name %></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= will_paginate @members %>
+
+<br>
