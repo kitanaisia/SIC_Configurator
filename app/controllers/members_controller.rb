@@ -5,12 +5,17 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     # 検索用のセレクトボックスに表示する、名前一覧
-    @name_list = Member.joins(:card).select("cards.name").distinct
-    @rarity_list = Member.select(:rarity).distinct
+    @name_list = Member.joins(:card).select("cards.name").order("cards.name").distinct
+    @rarity_list = Member.select(:rarity).order(:rarity).distinct
 
     # 検索の実行
-    attr = params.require(:search).permit(:name, :rarity) # strong parameters
-    @search_form = MemberSearchForm.new(attr)
+    @search_form
+    if params[:search] == nil
+      @search_form = MemberSearchForm.new
+    else
+      attr = params.require(:search).permit(:name, :rarity) # strong parameters
+      @search_form = MemberSearchForm.new(attr)
+    end
     @members = @search_form.search
     @members = @members.order("cards.number").page(params[:page])
 
@@ -79,5 +84,6 @@ class MembersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
       params.fetch(:member, {})
+      params.require(:search).permit(:name, :rarity) # strong parameters
     end
 end
