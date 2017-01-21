@@ -3,10 +3,17 @@
 <h1>Members</h1>
 
 <%= form_for @search_form, as: 'search', url: :members, html: {method: :get} do |f| %>
-  <%= f.collection_select :name, @name_list, :name, :name, :include_blank => true %>
-  <%= f.collection_select :rarity, @rarity_list, :rarity, :rarity, :include_blank => true %>
+  <div class="form-group">
+    <%= f.label :name, "名前", class: "control-label col-xs-1" %>
+    <%= f.collection_select :name, @name_list, :name, :name, :include_blank => true %>
+  </div>
 
-  <%= f.submit "検索" %>
+  <div class="form-group">
+    <%= f.label :rarity, "★", class: "control-label col-xs-1" %>
+    <%= f.collection_select :rarity, @rarity_list, :rarity, :rarity, :include_blank => true %>
+  </div>
+
+  <%= f.submit "検索", class: "btn btn-primary" %>
 <% end %>
 
 <%= page_entries_info @members %>
@@ -23,6 +30,6 @@
   <% end %>
 </div>
 
-<%= will_paginate @members %>
+<%= will_paginate @members, :renderer => BootstrapPagination::Rails %>
 
 <br>
