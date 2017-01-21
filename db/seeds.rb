@@ -11,6 +11,14 @@ Music.delete_all
 
 character = open("db/member.csv").read.split("\n").collect{|row| row.split("\t")} 
 character.each do |row|
+  rarity = 0
+  if row[5] == "☆☆☆"
+    rarity = 3
+  elsif row[5] == "☆☆"
+    rarity = 2
+  elsif row[5] == "☆"
+    rarity = 1
+  end
   Card.create({ name: row[0],
                 number: row[1],
                 card_id: row[2],
@@ -18,7 +26,7 @@ character.each do |row|
                 img: row[4]
   })
   Member.create({ card_id: row[2], 
-                  rarity: row[5], 
+                  rarity: rarity,
                   birthday: row[6], 
                   piece1: row[7], 
                   piece2: row[8], 
@@ -35,7 +43,7 @@ music.each do |row|
   live_p = row[6]
   live_p_base = nil
   live_p_extra = "-"
-  # $BDI2CF@E@$,$"$k3Z6J$N>l9g(B
+  # 追加得点がある楽曲の場合
   if live_p =~ /(\d)+\+(.*?)/
     live_p_base = $1.to_i
     live_p_base = $2
