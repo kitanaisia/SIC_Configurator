@@ -9,7 +9,22 @@
   </head>
 
   <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand">ラブライブ！スクコレデッキ管理システム</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="">デッキ</a></li>
+          <li><a href="/members">メンバー</a></li>
+          <li><a href="/musics">楽曲</a></li>
+        </ul>
+      </div>
+    </div>
     <p class="alert"><%= alert %></p>
+    </br>
+
     <%= yield %>
     <% if user_signed_in? %>
       <p><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-warning" %></p>
