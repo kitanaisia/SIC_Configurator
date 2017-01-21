@@ -2,10 +2,11 @@
 
 <h1>Members</h1>
 
-<%= form_tag members_path, :method => 'get' do %>
-  <%= label_tag :name, "カード名" %>
-  <%= select_tag :name, options_from_collection_for_select(@name_list, :name, :name) %>
-  <%= submit_tag "検索" %>
+<%= form_for @search_form, as: 'search', url: :members, html: {method: :get} do |f| %>
+  <%= f.collection_select :name, @name_list, :name, :name %>
+  <%= f.collection_select :rarity, @rarity_list, :rarity, :rarity %>
+
+  <%= f.submit "検索" %>
 <% end %>
 
 <%= page_entries_info @members %>

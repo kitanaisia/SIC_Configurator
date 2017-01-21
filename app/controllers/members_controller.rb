@@ -4,20 +4,16 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    # @members = Member.all
-    @members = Member.joins(:card).select("cards.*, members.*")
-
     # 検索用のセレクトボックスに表示する、名前一覧
     @name_list = Member.joins(:card).select("cards.name").distinct
+    @rarity_list = Member.select(:rarity).distinct
 
-    # 表示対象のカード
-    if params[:name].present?
-      @members = @members.get_by_name(params[:name])
-    end
-    if params[:rarity].present?
-      @members = @members.get_by_rarity(params[:rarity])
-    end
+    # 検索の実行
+    attr = params.require(:search).permit(:name, :rarity) # strong parameters
+    @search_form = MemberSearchForm.new(attr)
+    @members = @search_form.search
     @members = @members.order("cards.number").page(params[:page])
+
   end
 
   # GET /members/1
