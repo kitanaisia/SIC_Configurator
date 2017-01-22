@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104114944) do
+ActiveRecord::Schema.define(version: 20170122123108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,22 @@ ActiveRecord::Schema.define(version: 20170104114944) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "img"
+  end
+
+  create_table "decks", force: :cascade do |t|
+    t.integer  "deck_id"
+    t.integer  "memberlist_id"
+    t.integer  "setlist_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "memberlists", force: :cascade do |t|
+    t.integer  "memberlist_id"
+    t.string   "number"
+    t.integer  "count"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "members", force: :cascade do |t|
@@ -52,6 +68,14 @@ ActiveRecord::Schema.define(version: 20170104114944) do
     t.integer  "score_common"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "setlists", force: :cascade do |t|
+    t.integer  "memberlist_id"
+    t.string   "number"
+    t.integer  "count"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,2 @@
+class Memberlist < ApplicationRecord
+end
