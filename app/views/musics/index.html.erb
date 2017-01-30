@@ -2,6 +2,20 @@
 
 <h1>Musics</h1>
 
+<%= form_for @search_form, as: 'search', url: :musics, html: {method: :get} do |f| %>
+
+  <div class="radio-group">
+    <%= f.label :select, "すべて表示" %>
+    <%= f.radio_button :select, :all, :checked => true , class: "radio" %>
+
+  <div class="radio-group">
+    <%= f.label :select, "共通スコア" %>
+    <%= f.radio_button :select, :score_common, class: "radio" %>
+  </div>
+
+  <%= f.submit "検索", class: "btn btn-primary" %>
+<% end %>
+
 <%= page_entries_info @musics %>
 <br>
 
