@@ -4,7 +4,17 @@ class MusicsController < ApplicationController
   # GET /musics
   # GET /musics.json
   def index
-    @musics = Music.joins(:card).select("cards.*, musics.*").page(params[:page])
+    # 検索の実行
+    @search_form
+    p params[:search]
+    if params[:search] == nil
+      @search_form = MusicSearchForm.new
+    else
+      attr = params.require(:search).permit(:select) # strong parameters
+      @search_form = MusicSearchForm.new(attr)
+    end
+    @musics = @search_form.search
+    @musics = @musics.order("cards.number").page(params[:page])
   end
 
   # GET /musics/1
