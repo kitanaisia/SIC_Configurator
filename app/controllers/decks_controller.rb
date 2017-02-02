@@ -61,6 +61,34 @@ class DecksController < ApplicationController
     end
   end
 
+  # Add
+  def add
+    # ||= : 左辺が存在しない場合のみ、代入するの意
+    p session[:cart]
+    session[:cart] ||= Cart.new
+    session[:cart].add(Member.find_by_id(params[:id]))
+    @cart = session[:cart]
+    render :index
+  end
+
+  def change
+    @cart = object_deep_copy(session[:cart])
+    counts = params[:catalog]
+    counts.each do |c|
+      @cart.change(c[1]["id"], c[1]["count"])
+    end
+
+    @cart.compress
+
+    session[:cart] = @cart if @cart.valid?
+    render :action
+  end
+
+  def object_deep_copy(obj)
+    return Marshal.load(Marshal.dump(obj))
+  end
+  private :object_deep_copy
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_deck

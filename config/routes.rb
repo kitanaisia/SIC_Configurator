@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   resources :members
   resources :musics
   resources :decks
+
+  post "/members/:id", to: "decks#add"
 end

@@ -17,4 +17,9 @@
   <%= @member.skill%>
 </p>
 
+<%= form_tag ({:controller => "decks", :action => "add"}) do %>
+  <%= hidden_field_tag(:id, @member.id) %>
+  <%= submit_tag("デッキに入れる") %>
+<% end %>
+
 <%= link_to 'Back', members_path, class: "btn" %>
