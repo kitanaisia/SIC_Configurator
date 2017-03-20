@@ -65,6 +65,7 @@ class DecksController < ApplicationController
   def add
     # ||= : 左辺が存在しない場合のみ、代入するの意
     p session[:cart]
+    p Member.find_by_id(params[:id])
     session[:cart] ||= Cart.new
     session[:cart].add(Member.find_by_id(params[:id]))
     @cart = session[:cart]

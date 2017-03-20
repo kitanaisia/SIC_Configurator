@@ -18,7 +18,7 @@ class Cart
     for m in @members
       if m.id * member.id
         m.count += 1
-        exist = ture
+        exist = true
       end
     end
 
