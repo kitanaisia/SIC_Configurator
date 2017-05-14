@@ -1,4 +1,4 @@
 class Member < ApplicationRecord
-  belongs_to :card, foreign_key: :card_id, primary_key: :card_id
+  belongs_to :card, foreign_key: :number, primary_key: :number
   attr_accessor :count
 end

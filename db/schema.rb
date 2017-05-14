@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170122123108) do
+ActiveRecord::Schema.define(version: 20170514110655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20170122123108) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.integer  "card_id"
     t.string   "birthday"
     t.string   "grade"
     t.string   "piece1"
@@ -55,10 +54,10 @@ ActiveRecord::Schema.define(version: 20170122123108) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "rarity"
+    t.string   "number"
   end
 
   create_table "musics", force: :cascade do |t|
-    t.integer  "card_id"
     t.string   "color"
     t.integer  "live_p_base"
     t.string   "live_p_extra"
@@ -68,6 +67,7 @@ ActiveRecord::Schema.define(version: 20170122123108) do
     t.integer  "score_common"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "number"
   end
 
   create_table "setlists", force: :cascade do |t|

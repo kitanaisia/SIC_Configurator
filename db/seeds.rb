@@ -25,7 +25,7 @@ character.each do |row|
                 skill: row[3],
                 img: row[4]
   })
-  Member.create({ card_id: row[2], 
+  Member.create({ number: row[1], 
                   rarity: rarity,
                   birthday: row[6], 
                   piece1: row[7], 
@@ -57,7 +57,7 @@ music.each do |row|
                 skill: row[3],
                 img: row[4]
   })
-  Music.create({ card_id: row[2],
+  Music.create({ number: row[1],
                  color: row[5],
                  live_p_base: live_p_base,
                  live_p_extra: live_p_extra,
