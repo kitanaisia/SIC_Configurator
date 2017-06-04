@@ -27,6 +27,10 @@
         <div><img src=<%= member.img %>></div>
         <div><%= member.number%> <%= member.name %></div>
       <% end %>
+      <%= form_tag members_path, :action => :buy, :remote => true do %>
+        <%= select_tag :hoge, options_for_select(["0", "1", "2", "3", "4"]) %>
+        <%= submit_tag "デッキに追加", class: "btn btn-success" %>
+      <% end %>
     </div>
   <% end %>
 </div>
