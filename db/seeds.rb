@@ -28,13 +28,14 @@ character.each do |row|
   Member.create({ number: row[1], 
                   rarity: rarity,
                   birthday: row[6], 
-                  piece1: row[7], 
-                  piece2: row[8], 
-                  piece3: row[9], 
-                  piece4: row[10], 
-                  bonus: row[11], 
-                  ability: row[12], 
-                  costume: row[13]
+                  grade: row[7],
+                  piece1: row[9], 
+                  piece2: row[10], 
+                  piece3: row[11], 
+                  piece4: row[12], 
+                  bonus: row[13], 
+                  ability: row[14], 
+                  costume: row[15]
   })
 end
 
