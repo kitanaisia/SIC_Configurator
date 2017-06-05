@@ -2,23 +2,13 @@
 
 <h1>Decks</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @members = @cart.members %>
-    <% @members.each do |m| %>
-      <tr>
-        <td><%= m.card_id %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+<div>
+  <% @cards.each do |card| %>
+  <div style="display:inline-block;vertical-align:top;width:200px;" >
+    <div><img src=<%= card.img %>></div>
+    <div><%= card.number %> <%= card.name %></div>
+  </div>
+  <% end %>
+</div>
 
 <%= link_to 'New Deck', new_deck_path %>

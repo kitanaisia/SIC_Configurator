@@ -5,6 +5,12 @@ class DecksController < ApplicationController
   # GET /decks.json
   def index
     @decks = Deck.all
+
+    @cards = []
+    session[:member].each do |id|
+      
+      @cards << Member.joins(:card).select("cards.*, members.*").find_by(number: id)
+    end
   end
 
   # GET /decks/1

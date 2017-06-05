@@ -74,6 +74,14 @@ class MembersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def buy
+    session[:member] ||= []
+    params[:number].to_i.times do
+      session[:member] << params[:member_number]
+    end
+    pp session[:member]
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
