@@ -28,7 +28,7 @@
         <div><%= member.number%> <%= member.name %></div>
       <% end %>
       <%= form_tag member_buy_path(:member_id => member.id, :member_number => member.number), :action => :buy, :remote => true do %>
-        <%= select_tag :number, options_for_select(["0", "1", "2", "3", "4"]) %>
+        <%= select_tag :number, options_for_select([0, 1, 2, 3, 4]) %>
         <%= submit_tag "デッキに追加", class: "btn btn-success" %>
       <% end %>
     </div>

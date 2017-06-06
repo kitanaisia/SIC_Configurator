@@ -76,10 +76,8 @@ class MembersController < ApplicationController
   end
   
   def buy
-    session[:member] ||= []
-    params[:number].to_i.times do
-      session[:member] << params[:member_number]
-    end
+    session[:member] ||= Hash.new(0)
+    session[:member][params[:member_number]] = params[:number].to_i
     pp session[:member]
   end
 

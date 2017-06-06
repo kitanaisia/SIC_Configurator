@@ -26,6 +26,10 @@
         <div><img src=<%= music.img %>></div>
         <div><%= music.number%> <%= music.name %></div>
       <% end %>
+      <%= form_tag music_buy_path(:music_id => music.id, :music_number => music.number), :action => :buy, :remote => true do %>
+        <%= select_tag :number, options_for_select(["0", "1"]) %>
+        <%= submit_tag "デッキに追加", class: "btn btn-success" %>
+      <% end %>
     </div>
   <% end %>
 </div>

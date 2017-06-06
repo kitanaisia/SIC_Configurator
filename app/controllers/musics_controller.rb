@@ -1,12 +1,12 @@
 class MusicsController < ApplicationController
   before_action :set_music, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery except: :buy
 
   # GET /musics
   # GET /musics.json
   def index
     # 検索の実行
     @search_form
-    p params[:search]
     if params[:search] == nil
       @search_form = MusicSearchForm.new
     else
@@ -69,6 +69,12 @@ class MusicsController < ApplicationController
       format.html { redirect_to musics_url, notice: 'Music was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def buy
+    session[:music] ||= Hash.new(0)
+    session[:music][params[:music_number]] = params[:number].to_i
+    pp session[:music]
   end
 
   private

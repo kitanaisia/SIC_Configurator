@@ -6,9 +6,13 @@ Rails.application.routes.draw do
   resources :members do
     post :buy
   end
-  resources :musics
-  resources :decks
+  resources :musics do
+    post :buy
+  end
+  resources :decks do
+    post :remove_member
+    post :remove_music
+  end
 
   post "/members/:id", to: "decks#add"
-  post "/members/buy"
 end

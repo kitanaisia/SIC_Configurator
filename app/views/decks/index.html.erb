@@ -1,14 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Decks</h1>
-
+<h1>Members</h1>
 <div>
-  <% @cards.each do |card| %>
+  <% @members.each do |member| %>
   <div style="display:inline-block;vertical-align:top;width:200px;" >
-    <div><img src=<%= card.img %>></div>
-    <div><%= card.number %> <%= card.name %></div>
+    <div><img src=<%= member.img %>></div>
+    <div><%= member.number %> <%= member.name %></div>
+    <%= button_to "デッキから除く", deck_remove_member_path(:deck_id => member.id, :member_number => member.number), :remote => true %>
   </div>
   <% end %>
 </div>
 
-<%= link_to 'New Deck', new_deck_path %>
+<h1>Musics</h1>
+<div>
+  <% @musics.each do |music| %>
+  <div style="display:inline-block;vertical-align:top;width:200px;" >
+    <div><img src=<%= music.img %>></div>
+    <div><%= music.number %> <%= music.name %></div>
+  </div>
+  <%= button_to "デッキから除く", deck_remove_music_path(:deck_id => music.id, :music_number => music.number), :remote => true %>
+  <% end %>
+</div>

@@ -5,11 +5,26 @@ class DecksController < ApplicationController
   # GET /decks.json
   def index
     @decks = Deck.all
+    p session[:member]
+    p session[:music]
 
-    @cards = []
-    session[:member].each do |id|
-      
-      @cards << Member.joins(:card).select("cards.*, members.*").find_by(number: id)
+    @members= []
+    @musics= []
+    session[:member].each do |member|
+      id = member[0]
+      count = member[1]
+
+      count.to_i.times do
+        @members << Member.joins(:card).select("cards.*, members.*").find_by(number: id) 
+      end
+    end
+    session[:music].each do |music|
+      id = music[0]
+      count = music[1]
+
+      count.to_i.times do
+        @musics << Music.joins(:card).select("cards.*, musics.*").find_by(number: id) 
+      end
     end
   end
 
@@ -67,34 +82,15 @@ class DecksController < ApplicationController
     end
   end
 
-  # Add
-  def add
-    # ||= : 左辺が存在しない場合のみ、代入するの意
-    p session[:cart]
-    p Member.find_by_id(params[:id])
-    session[:cart] ||= Cart.new
-    session[:cart].add(Member.find_by_id(params[:id]))
-    @cart = session[:cart]
-    render :index
+  def remove_member
+    session[:member][params[:member_number]] -= 1
+    pp session[:member]
   end
 
-  def change
-    @cart = object_deep_copy(session[:cart])
-    counts = params[:catalog]
-    counts.each do |c|
-      @cart.change(c[1]["id"], c[1]["count"])
-    end
-
-    @cart.compress
-
-    session[:cart] = @cart if @cart.valid?
-    render :action
+  def remove_music
+    session[:music][params[:music_number]] -= 1
+    pp session[:music]
   end
-
-  def object_deep_copy(obj)
-    return Marshal.load(Marshal.dump(obj))
-  end
-  private :object_deep_copy
 
   private
     # Use callbacks to share common setup or constraints between actions.
