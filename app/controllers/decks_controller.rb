@@ -5,8 +5,6 @@ class DecksController < ApplicationController
   # GET /decks.json
   def index
     @decks = Deck.all
-    p session[:member]
-    p session[:music]
 
     @members= []
     @musics= []
@@ -31,6 +29,22 @@ class DecksController < ApplicationController
   # GET /decks/1
   # GET /decks/1.json
   def show
+    memberlist = Memberlist.where(memberlist_id: @deck.memberlist_id)
+
+    @members = []
+    @musics = []
+    memberlist.each do |member|
+      member.count.to_i.times do
+        @members << Member.joins(:card).select("cards.*, members.*").find_by(number: member.number)
+      end
+    end
+
+    setlist = Setlist.where(setlist_id: @deck.setlist_id)
+    setlist.each do |music|
+      music.count.to_i.times do
+        @musics << Music.joins(:card).select("cards.*, musics.*").find_by(number: music.number)
+      end
+    end
   end
 
   # GET /decks/new
@@ -45,7 +59,34 @@ class DecksController < ApplicationController
   # POST /decks
   # POST /decks.json
   def create
-    @deck = Deck.new(deck_params)
+    memberlist_id = Memberlist.maximum(:memberlist_id)
+    if memberlist_id.nil?
+        memberlist_id = 1
+    end
+
+    setlist_id = Setlist.maximum(:setlist_id)
+    if setlist_id.nil?
+        setlist_id = 1
+    end
+
+    # memberlist, setlistの作成
+    session[:member].each do |member|
+      id = member[0]
+      count = member[1]
+      Memberlist.new(memberlist_id: memberlist_id, number: id, count: count).save
+    end
+    session[:music].each do |music|
+      id = music[0]
+      count = music[1]
+      Setlist.new(setlist_id: setlist_id, number: id, count: count).save
+    end
+
+    # デッキの作成
+    @deck = Deck.new(memberlist_id: memberlist_id, setlist_id: setlist_id)
+
+    # セッション情報の削除
+    session[:member].clear
+    session[:music].clear
 
     respond_to do |format|
       if @deck.save

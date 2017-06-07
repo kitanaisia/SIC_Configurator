@@ -1,5 +1,24 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Decks</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>デッキID</th>
+      <th>セットリストID</th>
+  </thead>
+  <tbody>
+    <% @decks.each do |deck| %>
+      <tr>
+        <td><%= deck.memberlist_id %></td>
+        <td><%= deck.setlist_id %></td>
+        <td><%= link_to "show", deck %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
 <h1>Members</h1>
 <div>
   <% @members.each do |member| %>
@@ -17,7 +36,10 @@
   <div style="display:inline-block;vertical-align:top;width:200px;" >
     <div><img src=<%= music.img %>></div>
     <div><%= music.number %> <%= music.name %></div>
+    <%= button_to "デッキから除く", deck_remove_music_path(:deck_id => music.id, :music_number => music.number), :remote => true %>
   </div>
-  <%= button_to "デッキから除く", deck_remove_music_path(:deck_id => music.id, :music_number => music.number), :remote => true %>
   <% end %>
 </div>
+
+<br>
+<%= button_to "確定" %>

@@ -1,4 +1,24 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Members</h1>
+<div>
+  <% @members.each do |member| %>
+  <div style="display:inline-block;vertical-align:top;width:200px;" >
+    <div><img src=<%= member.img %>></div>
+    <div><%= member.number %> <%= member.name %></div>
+  </div>
+  <% end %>
+</div>
+
+<h1>Musics</h1>
+<div>
+  <% @musics.each do |music| %>
+  <div style="display:inline-block;vertical-align:top;width:200px;" >
+    <div><img src=<%= music.img %>></div>
+    <div><%= music.number %> <%= music.name %></div>
+  </div>
+  <% end %>
+</div>
+
 <%= link_to 'Edit', edit_deck_path(@deck) %> |
 <%= link_to 'Back', decks_path %>
