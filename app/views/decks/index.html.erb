@@ -4,15 +4,18 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>デッキ名</th>
       <th>デッキID</th>
       <th>セットリストID</th>
   </thead>
   <tbody>
     <% @decks.each do |deck| %>
       <tr>
+        <td><%= deck.name %></td>
         <td><%= deck.memberlist_id %></td>
         <td><%= deck.setlist_id %></td>
         <td><%= link_to "show", deck %></td>
+        <td><%= link_to "destroy", deck, method: :delete %></td>
       </tr>
     <% end %>
   </tbody>
@@ -42,4 +45,8 @@
 </div>
 
 <br>
-<%= button_to "確定" %>
+
+<%= form_tag decks_path, :method => :post do |f| %>
+  <%= text_field_tag :name, params[:name] %>
+  <%= submit_tag "確定" %>
+<% end %>
