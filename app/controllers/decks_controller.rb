@@ -69,14 +69,18 @@ class DecksController < ApplicationController
   # POST /decks
   # POST /decks.json
   def create
-    memberlist_id = Memberlist.maximum(:memberlist_id) + 1
+    memberlist_id = Memberlist.maximum(:memberlist_id)
     if memberlist_id.nil?
         memberlist_id = 1
+    else
+      memberlist_id += 1
     end
 
-    setlist_id = Setlist.maximum(:setlist_id) + 1
+    setlist_id = Setlist.maximum(:setlist_id)
     if setlist_id.nil?
         setlist_id = 1
+    else
+      setlist_id += 1
     end
 
     # memberlist, setlistの作成
