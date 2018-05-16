@@ -18,7 +18,6 @@ class MembersController < ApplicationController
     end
     @members = @search_form.search
     @members = @members.order("cards.number").page(params[:page])
-
   end
 
   # GET /members/1
