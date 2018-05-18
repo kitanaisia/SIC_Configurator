@@ -2,27 +2,19 @@
 
 <h1>Members</h1>
 
-<div class="row">
-  <div class="col-md-6">
-    <%= form_for @search_form, as: 'search', url: :members, html: {method: :get} do |f| %>
+    <%= form_for @search_form, as: 'search', url: :members, html: {method: :get, class: "form-inline"} do |f| %>
       <div class="form-group">
-        <%= f.label :name, "名前", class: "col-xs-2" %>
-        <div class="col-xs-4">
-          <%= f.collection_select :name, @name_list, :name, :name, {:include_blank => true}, {class: "form-control"} %>
-        </div>
+        <%= f.label :name, "名前" %>
+        <%= f.collection_select :name, @name_list, :name, :name, {:include_blank => true}, {class: "form-control"} %>
       </div>
 
       <div class="form-group">
-        <%= f.label :rarity, "レアリティ", class: "col-xs-2" %>
-        <div class="col-xs-2">
-          <%= f.collection_select :rarity, @rarity_list, :rarity, :rarity, {:include_blank => true}, {class: "form-control"} %>
-        </div>
+        <%= f.label :rarity, "レアリティ" %>
+        <%= f.collection_select :rarity, @rarity_list, :rarity, :rarity, {:include_blank => true}, {class: "form-control"} %>
       </div>
 
-  <%= f.submit "検索", class: "btn btn-primary" %>
-<% end %>
-</div>
-</div>
+      <%= f.submit "検索", class: "btn btn-primary" %>
+    <% end %>
 
 <br>
 <%= page_entries_info @members %>

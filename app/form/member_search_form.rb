@@ -6,6 +6,6 @@ class MemberSearchForm
     member = Member.joins(:card).select("cards.*, members.*")
     member = member.where("name like ?", "%#{name}%") if name.present?
     member = member.where("rarity = " + rarity) if rarity.present?
-    member
+    member.order(rarity: :desc, id: :asc)
   end
 end
