@@ -1,0 +1,29 @@
+<h1>待機中</h1>
+<div>
+  <% @waiting.each do |member| %>
+    <div style="display:inline-block;vertical-align:top;width:200px;" >
+      <div><img src=<%= member.img %>></div>
+      <div><%= member.number %> <%= member.name %></div>
+    </div>
+  <% end %>
+</div>
+
+<h1>手札</h1>
+<div>
+  <% @hands.each do |member| %>
+    <div style="display:inline-block;vertical-align:top;width:200px;" >
+      <div><img src=<%= member.img %>></div>
+      <div><%= member.number %> <%= member.name %></div>
+    </div>
+  <% end %>
+</div>
+
+<h1>セットリスト</h1>
+<div>
+  <% @setlist_open.each do |music| %>
+    <div style="display:inline-block;vertical-align:top;width:200px;" >
+      <div><img src=<%= music.img %>></div>
+      <div><%= music.number %> <%= music.name %></div>
+    </div>
+  <% end %>
+</div>
