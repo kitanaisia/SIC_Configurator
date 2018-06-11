@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   resources :decks do
     post :remove_member
     post :remove_music
+    member do
+      get :battle
+    end
   end
 
   post "/members/:id", to: "decks#add"

@@ -1,5 +1,5 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: [:show, :edit, :update, :destroy]
+  before_action :set_deck, only: [:show, :edit, :update, :destroy, :battle]
 
   # GET /decks
   # GET /decks.json
@@ -39,22 +39,20 @@ class DecksController < ApplicationController
   # GET /decks/1
   # GET /decks/1.json
   def show
-    memberlist = Memberlist.where(memberlist_id: @deck.memberlist_id)
+  end
 
-    @members = []
-    @musics = []
-    memberlist.each do |member|
-      member.count.to_i.times do
-        @members << Member.joins(:card).select("cards.*, members.*").find_by(number: member.number)
-      end
-    end
+  # GET /decks/1/battle
+  def battle
+    # 待機中メンバー = スタートメンバー
+    @waiting = [@members.first]
 
-    setlist = Setlist.where(setlist_id: @deck.setlist_id)
-    setlist.each do |music|
-      music.count.to_i.times do
-        @musics << Music.joins(:card).select("cards.*, musics.*").find_by(number: music.number)
-      end
-    end
+    # 手札
+    @deck = @members[1..-1].shuffle
+    @hands = @deck.pop(4)  # 初期手札4枚
+    
+    # セットリスト
+    @setlist_closed = @musics.shuffle
+    @setlist_open = @setlist_closed.pop(2)
   end
 
   # GET /decks/new
@@ -83,7 +81,7 @@ class DecksController < ApplicationController
       setlist_id += 1
     end
 
-    # memberlist, setlist$B$N:n@.(B
+    # memberlist, setlistの作成
     session[:member].each do |member|
       id = member[0]
       count = member[1]
@@ -97,10 +95,10 @@ class DecksController < ApplicationController
 
     p name = params[:name]
 
-    # $B%G%C%-$N:n@.(B
+    # デッキの作成
     @deck = Deck.new(name: name, memberlist_id: memberlist_id, setlist_id: setlist_id)
 
-    # $B%;%C%7%g%s>pJs$N:o=|(B
+    # セッション情報の削除
     session[:member].clear
     session[:music].clear
 
@@ -153,6 +151,22 @@ class DecksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_deck
       @deck = Deck.find(params[:id])
+      memberlist = Memberlist.where(memberlist_id: @deck.memberlist_id)
+
+      @members = []
+      @musics = []
+      memberlist.each do |member|
+        member.count.to_i.times do
+          @members << Member.joins(:card).select("cards.*, members.*").find_by(number: member.number)
+        end
+      end
+
+      setlist = Setlist.where(setlist_id: @deck.setlist_id)
+      setlist.each do |music|
+        music.count.to_i.times do
+          @musics << Music.joins(:card).select("cards.*, musics.*").find_by(number: music.number)
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
