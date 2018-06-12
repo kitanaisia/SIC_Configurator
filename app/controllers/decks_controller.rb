@@ -43,16 +43,31 @@ class DecksController < ApplicationController
 
   # GET /decks/1/battle
   def battle
+    # === セッション情報の初期化 ===
     # 待機中メンバー = スタートメンバー
-    @waiting = [@members.first]
+    session[:waiting] = [@members.first.id]
 
     # 手札
-    @deck = @members[1..-1].shuffle
-    @hands = @deck.pop(4)  # 初期手札4枚
+    session[:deck] = @members[1..-1].shuffle.map {|member| member.id }
+    session[:hand] = session[:deck].pop(4)
     
     # セットリスト
-    @setlist_closed = @musics.shuffle
-    @setlist_open = @setlist_closed.pop(2)
+    session[:setlist_closed] = @musics.shuffle.map {|music| music.id }
+    session[:setlist_open] = session[:setlist_closed].pop(2)
+
+    # === セッション情報を基に画面に表示するカード情報を取得 ===
+    @waiting = session[:waiting].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
+    @hands = session[:hand].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
+    @setlist_open = session[:setlist_open].map {|id| Music.joins(:card).select("cards.*, musics.*").find(id) }
+  end
+
+  def draw
+    # デッキからカード1ドロー
+    session[:hand] <<  session[:deck].pop if session[:deck].length > 0
+
+    @waiting = session[:waiting].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
+    @hands = session[:hand].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
+    @setlist_open = session[:setlist_open].map {|id| Music.joins(:card).select("cards.*, musics.*").find(id) }
   end
 
   # GET /decks/new

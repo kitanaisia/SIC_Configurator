@@ -9,6 +9,7 @@
 </div>
 
 <h1>手札</h1>
+<%= button_to '1ドロー', draw_decks_path, remote: true, class: "btn btn-default" %>
 <div>
   <% @hands.each do |member| %>
     <div style="display:inline-block;vertical-align:top;width:200px;" >

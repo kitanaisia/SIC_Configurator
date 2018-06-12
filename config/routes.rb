@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :decks do
     post :remove_member
     post :remove_music
+    post :draw, on: :collection
     member do
       get :battle
     end
