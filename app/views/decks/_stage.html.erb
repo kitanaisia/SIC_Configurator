@@ -11,10 +11,11 @@
 <h1>手札</h1>
 <%= button_to '1ドロー', draw_decks_path, remote: true, class: "btn btn-default" %>
 <div>
-  <% @hands.each do |member| %>
+  <% @hands.each_index do |index| %>
     <div style="display:inline-block;vertical-align:top;width:200px;" >
-      <div><img src=<%= member.img %>></div>
-      <div><%= member.number %> <%= member.name %></div>
+      <div><img src=<%= @hands[index].img %>></div>
+      <div><%= @hands[index].number %> <%= @hands[index].name %></div>
+      <div><%= button_to '登場', enter_decks_path(index: index), remote: true, class: "btn btn-default" %></div>
     </div>
   <% end %>
 </div>
