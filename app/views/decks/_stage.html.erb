@@ -1,12 +1,49 @@
-<h1>待機中</h1>
-<div>
-  <% @waiting.each do |member| %>
-    <div style="display:inline-block;vertical-align:top;width:200px;" >
-      <div><img src=<%= member.img %>></div>
-      <div><%= member.number %> <%= member.name %></div>
-    </div>
-  <% end %>
-</div>
+<%= form_tag live_decks_path, remote: true do %>
+  <h1>ライブ中</h1>
+  <div>
+    <% @live.each do |live| %>
+      <div style="display:inline-block;vertical-align:top;width:200px;" >
+        <div><img src=<%= live[0].img %>></div>
+        <div><%= live[0].number %> <%= live[0].name %></div>
+      </div>
+
+      <% live[1].each do |member| %>
+        <div style="display:inline-block;vertical-align:top;width:200px;" >
+          <div><img src=<%= member.img %>></div>
+          <div><%= member.number %> <%= member.name %></div>
+        </div>
+      <% end %>
+      <br>
+    <% end %>
+  </div>
+
+  <h1>待機中</h1>
+  <div>
+    <% @waiting.each_index do |index| %>
+      <div style="display:inline-block;vertical-align:top;width:200px;" >
+        <div><img src=<%= @waiting[index].img %>></div>
+        <div><%= @waiting[index].number %> <%= @waiting[index].name %></div>
+        <div>
+          <%= check_box_tag "member[index][]", index, class: "checkbox" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <h1>セットリスト</h1>
+  <div>
+    <% @setlist_open.each_index do |index| %>
+      <div style="display:inline-block;vertical-align:top;width:200px;" >
+        <div><img src=<%= @setlist_open[index].img %>></div>
+        <div><%= @setlist_open[index].number %> <%= @setlist_open[index].name %></div>
+        <div>
+          <%= radio_button_tag "music", index, class: "checkbox" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= submit_tag "ライブする" %>
+<% end %>
 
 <h1>手札</h1>
 <%= button_to '1ドロー', draw_decks_path, remote: true, class: "btn btn-default" %>
@@ -20,12 +57,3 @@
   <% end %>
 </div>
 
-<h1>セットリスト</h1>
-<div>
-  <% @setlist_open.each do |music| %>
-    <div style="display:inline-block;vertical-align:top;width:200px;" >
-      <div><img src=<%= music.img %>></div>
-      <div><%= music.number %> <%= music.name %></div>
-    </div>
-  <% end %>
-</div>

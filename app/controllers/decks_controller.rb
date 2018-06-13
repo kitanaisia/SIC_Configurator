@@ -55,6 +55,9 @@ class DecksController < ApplicationController
     session[:setlist_closed] = @musics.shuffle.map {|music| music.id }
     session[:setlist_open] = session[:setlist_closed].pop(2)
 
+    # ライブ中
+    session[:live] = []
+
     self.rendering
   end
 
@@ -66,6 +69,22 @@ class DecksController < ApplicationController
 
   def enter
     session[:waiting] << session[:hand].delete_at(params[:index].to_i)
+    self.rendering
+  end
+
+  def live
+    music = ""
+    members = []
+
+    music = session[:setlist_open].delete_at(params[:music].to_i)
+    params[:member][:index].sort {|x, y| y <=> x }.each do |index|
+      members << session[:waiting].delete_at(index.to_i)
+    end
+    session[:setlist_open] << session[:setlist_closed].pop
+
+    live = [music, members]
+    session[:live] << live
+
     self.rendering
   end
 
@@ -166,6 +185,13 @@ class DecksController < ApplicationController
     @waiting = session[:waiting].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
     @hands = session[:hand].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
     @setlist_open = session[:setlist_open].map {|id| Music.joins(:card).select("cards.*, musics.*").find(id) }
+    p session[:live]
+    @live = session[:live].map {|elem| 
+      [Music.joins(:card).select("cards.*, musics.*").find(elem[0]), elem[1].map {|id| 
+        Member.joins(:card).select("cards.*, members.*").find(id) 
+      }]
+    }
+    @live ||= [] 
   end
 
   private
