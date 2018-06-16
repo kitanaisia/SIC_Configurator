@@ -61,23 +61,56 @@ class DecksController < ApplicationController
     self.rendering
   end
 
+  # デッキからカード1ドロー
   def draw
-    # デッキからカード1ドロー
     session[:hand] <<  session[:deck].pop if session[:deck].length > 0
     self.rendering
   end
 
+  # 登場
   def enter
     session[:waiting] << session[:hand].delete_at(params[:index].to_i)
     self.rendering
   end
 
+  # 登場
+  def enter_from_top
+    session[:waiting] << session[:deck].pop if session[:deck].length > 0
+    self.rendering
+  end
+
+  # 手札をデッキの一番上に置く
+  def to_top
+    session[:deck] << session[:hand].delete_at(params[:index].to_i)
+    self.rendering
+  end
+
+  # 手札をデッキの一番下に置く
+  def to_bottom
+    # ボトムすなわちデッキ配列の先頭に追加
+    session[:deck].unshift(session[:hand].delete_at(params[:index].to_i))
+    self.rendering
+  end
+
+  # セットリストオープン 
+  def setlist_open
+    session[:setlist_open] << session[:setlist_closed].pop if session[:setlist_closed].length > 0
+    self.rendering
+  end
+
+  # セットリストオープン 
+  def back
+    session[:hand] << session[:waiting].delete_at(params[:index].to_i)
+    self.rendering
+  end
+
+  # ライブする
   def live
     music = ""
     members = []
 
     music = session[:setlist_open].delete_at(params[:music].to_i)
-    params[:member][:index].sort {|x, y| y <=> x }.each do |index|
+    params[:member][:index].sort {|x, y| y.to_i <=> x.to_i }.each do |index|
       members << session[:waiting].delete_at(index.to_i)
     end
     session[:setlist_open] << session[:setlist_closed].pop
@@ -125,8 +158,6 @@ class DecksController < ApplicationController
       count = music[1]
       Setlist.new(setlist_id: setlist_id, number: id, count: count).save
     end
-
-    p name = params[:name]
 
     # デッキの作成
     @deck = Deck.new(name: name, memberlist_id: memberlist_id, setlist_id: setlist_id)

@@ -13,7 +13,12 @@ Rails.application.routes.draw do
     post :remove_member
     post :remove_music
     post :draw, on: :collection
+    post :back, on: :collection
     post :enter, on: :collection
+    post :enter_from_top, on: :collection
+    post :to_top, on: :collection
+    post :to_bottom, on: :collection
+    post :setlist_open, on: :collection
     post :live, on: :collection
     member do
       get :battle
