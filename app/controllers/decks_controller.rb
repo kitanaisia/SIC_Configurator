@@ -160,7 +160,7 @@ class DecksController < ApplicationController
     end
 
     # デッキの作成
-    @deck = Deck.new(name: name, memberlist_id: memberlist_id, setlist_id: setlist_id)
+    @deck = Deck.new(name: params[:name], memberlist_id: memberlist_id, setlist_id: setlist_id)
 
     # セッション情報の削除
     session[:member].clear
