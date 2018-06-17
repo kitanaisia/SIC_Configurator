@@ -113,7 +113,7 @@ class DecksController < ApplicationController
     params[:member][:index].sort {|x, y| y.to_i <=> x.to_i }.each do |index|
       members << session[:waiting].delete_at(index.to_i)
     end
-    session[:setlist_open] << session[:setlist_closed].pop
+    session[:setlist_open] << session[:setlist_closed].pop if session[:setlist_closed].length > 0
 
     live = [music, members]
     session[:live] << live
