@@ -216,7 +216,6 @@ class DecksController < ApplicationController
     @waiting = session[:waiting].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
     @hands = session[:hand].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
     @setlist_open = session[:setlist_open].map {|id| Music.joins(:card).select("cards.*, musics.*").find(id) }
-    p session[:live]
     @live = session[:live].map {|elem| 
       [Music.joins(:card).select("cards.*, musics.*").find(elem[0]), elem[1].map {|id| 
         Member.joins(:card).select("cards.*, members.*").find(id) 
