@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :decks do
     post :remove_member
     post :remove_music
+    post :to_start
     post :draw, on: :collection
     post :back, on: :collection
     post :enter, on: :collection

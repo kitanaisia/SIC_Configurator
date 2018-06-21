@@ -1,5 +1,5 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: [:show, :edit, :update, :destroy, :battle]
+  before_action :set_deck, only: [:show, :edit, :update, :destroy, :battle, :to_start]
 
   # GET /decks
   # GET /decks.json
@@ -11,7 +11,6 @@ class DecksController < ApplicationController
 
     begin
       session[:member].each do |member|
-        p member
         id = member[0]
         count = member[1]
 
@@ -46,10 +45,10 @@ class DecksController < ApplicationController
   def battle
     # === セッション情報の初期化 ===
     # 待機中メンバー = スタートメンバー
-    session[:waiting] = [@members.first.id]
+    session[:waiting] = [@start.id]
 
     # 手札
-    session[:deck] = @members[1..-1].shuffle.map {|member| member.id }
+    session[:deck] = @members.shuffle.map {|member| member.id }
     session[:hand] = session[:deck].pop(4)
     
     # セットリスト
@@ -131,6 +130,8 @@ class DecksController < ApplicationController
   def edit
     session[:member] = Hash.new(0)
     session[:music] = Hash.new(0)
+
+    session[:member][@start.number] += 1
     @members.each do |member|
       session[:member][member.number] += 1
     end
@@ -161,7 +162,8 @@ class DecksController < ApplicationController
     session[:member].each do |member|
       id = member[0]
       count = member[1]
-      Memberlist.new(memberlist_id: memberlist_id, number: id, count: count).save
+      start = ( Memberlist.find_by(memberlist_id: memberlist_id).present? ? false : true )
+      Memberlist.new(memberlist_id: memberlist_id, number: id, count: count, start: start).save
     end
     session[:music].each do |music|
       id = music[0]
@@ -221,6 +223,14 @@ class DecksController < ApplicationController
     pp session[:music]
   end
 
+  def to_start
+    memberlist_id = Deck.find(params[:deck_id]).memberlist_id
+    Memberlist.find_by(memberlist_id: memberlist_id, start: true).update(start: false)
+    Memberlist.find_by(memberlist_id: memberlist_id, number: params[:number]).update(start: true)
+
+    redirect_to @deck
+  end
+
   def rendering
     # === セッション情報を基に画面に表示するカード情報を取得 ===
     @waiting = session[:waiting].map {|id| Member.joins(:card).select("cards.*, members.*").find(id) }
@@ -238,8 +248,10 @@ class DecksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_deck
       @deck = Deck.find(params[:id])
-      memberlist = Memberlist.where(memberlist_id: @deck.memberlist_id)
+      memberlist = Memberlist.where(memberlist_id: @deck.memberlist_id, start: false)
 
+      start = Memberlist.find_by(memberlist_id: @deck.memberlist_id, start: true)
+      @start = Member.joins(:card).select("cards.*, members.*").find_by(number: start.number)
       @members = []
       @musics = []
       memberlist.each do |member|

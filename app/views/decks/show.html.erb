@@ -5,10 +5,16 @@
 
 <h1>Members</h1>
 <div>
+  <div style="display:inline-block;vertical-align:top;width:200px;" >
+    <div><img src=<%= @start.img %>></div>
+    <div><%= @start.number %> <%= @start.name %></div>
+  </div>
+
   <% @members.each do |member| %>
   <div style="display:inline-block;vertical-align:top;width:200px;" >
     <div><img src=<%= member.img %>></div>
     <div><%= member.number %> <%= member.name %></div>
+    <div><%= link_to "スタートにする", deck_to_start_path(id: @deck.id, deck_id: @deck.id, number: member.number), method: :post, class: "btn btn-default", type: :button %></div>
   </div>
   <% end %>
 </div>
