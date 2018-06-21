@@ -11,6 +11,7 @@ class DecksController < ApplicationController
 
     begin
       session[:member].each do |member|
+        p member
         id = member[0]
         count = member[1]
 
@@ -128,6 +129,15 @@ class DecksController < ApplicationController
 
   # GET /decks/1/edit
   def edit
+    session[:member] = Hash.new(0)
+    session[:music] = Hash.new(0)
+    @members.each do |member|
+      session[:member][member.number] += 1
+    end
+    @musics.each do |music|
+      session[:music][music.number] += 1
+    end
+    redirect_to decks_url
   end
 
   # POST /decks

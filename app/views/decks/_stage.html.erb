@@ -8,7 +8,7 @@
         </div>
 
         <% live[1].each_index do |index| %>
-          <div style="display:inline-block;vertical-align:top;width:200px;" >
+          <div style="display:inline-block;vertical-align:top;width:175px;" >
             <div><img src=<%= live[1][index].img %>></div>
             <div><%= live[1][index].number %> <%= live[1][index].name %></div>
           </div>
@@ -20,10 +20,10 @@
     <h1>待機中</h1>
     <div>
       <% @waiting.each_index do |index| %>
-        <div style="display:inline-block;vertical-align:top;width:200px;" >
+        <div style="display:inline-block;vertical-align:top;width:175px;" >
           <div><img src=<%= @waiting[index].img %>></div>
           <div><%= @waiting[index].number %> <%= @waiting[index].name %></div>
-          <div>
+          <div style="padding-left:60px">
             <%= check_box_tag "member[index][]", index, checked = false, class: "checkbox" %>
           </div>
           <br>
@@ -41,13 +41,15 @@
           <div style="display:inline-block;vertical-align:top;width:200px;" >
             <div><img src=<%= @setlist_open[index].img %>></div>
             <div><%= @setlist_open[index].number %> <%= @setlist_open[index].name %></div>
-            <div>
+            <div align="center">
               <%= radio_button_tag "music", index, class: "checkbox" %>
             </div>
           </div>
         <% end %>
       </div>
-      <%= submit_tag "ライブする", class: "btn btn-default" %>
+      <div align="center">
+        <%= submit_tag "ライブする", class: "btn btn-default" %>
+      </div>
     </div>
 <% end %>
 
@@ -66,15 +68,15 @@
   <div>
     <% @hands.each_index do |index| %>
       <div style="display:inline-block;vertical-align:top;width:175px;" >
-        <div><%= link_to '登場', enter_decks_path(index: index), method: :post, remote: true, type: :button, class: "btn btn-default" %></div>
+        <div style="padding-left:40px"><%= link_to '登場', enter_decks_path(index: index), method: :post, remote: true, type: :button, class: "btn btn-default" %></div>
         <div><img src=<%= @hands[index].img %>></div>
         <div><%= @hands[index].number %> <%= @hands[index].name %></div>
         <div class="row">
           <div class="col-xs-6">
-            <div><%= link_to 'ボトム', to_bottom_decks_path(index: index), method: :post, remote: true, type: :button, class: "btn btn-default" %></div>
+            <div><%= link_to 'ボトム', to_bottom_decks_path(index: index), method: :post, remote: true, type: :button, class: "btn btn-warning" %></div>
           </div>
           <div class="col-xs-6">
-            <div><%= link_to 'トップ', to_top_decks_path(index: index), method: :post, remote: true, type: :button, class: "btn btn-default" %></div>
+            <div><%= link_to 'トップ', to_top_decks_path(index: index), method: :post, remote: true, type: :button, class: "btn btn-warning" %></div>
           </div>
         </div>
       </div>

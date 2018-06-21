@@ -14,7 +14,7 @@
         <td><%= deck.memberlist_id %></td>
         <td><%= deck.setlist_id %></td>
         <td><%= link_to "show", deck %></td>
-        <td><%= link_to "destroy", deck, method: :delete %></td>
+        <td><%= link_to "destroy", deck, method: :delete, data: {confirm: "本当に削除しますか？"}  %></td>
       </tr>
     <% end %>
   </tbody>
