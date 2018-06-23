@@ -161,7 +161,7 @@ class DecksController < ApplicationController
     # memberlist, setlistの作成
     session[:member].each do |member|
       id = member[0]
-      count = member[1]
+      p count = member[1]
       start = ( Memberlist.find_by(memberlist_id: memberlist_id).present? ? false : true )
       Memberlist.new(memberlist_id: memberlist_id, number: id, count: count, start: start).save
     end
@@ -248,14 +248,18 @@ class DecksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_deck
       @deck = Deck.find(params[:id])
-      memberlist = Memberlist.where(memberlist_id: @deck.memberlist_id, start: false)
+      memberlist = Memberlist.where(memberlist_id: @deck.memberlist_id)
 
       start = Memberlist.find_by(memberlist_id: @deck.memberlist_id, start: true)
       @start = Member.joins(:card).select("cards.*, members.*").find_by(number: start.number)
       @members = []
       @musics = []
       memberlist.each do |member|
-        member.count.to_i.times do
+        # スタートメンバーはデッキから-1枚する
+        count = member.count.to_i
+        count -= 1 if member.number == @start.number
+
+        count.times do
           @members << Member.joins(:card).select("cards.*, members.*").find_by(number: member.number)
         end
       end
