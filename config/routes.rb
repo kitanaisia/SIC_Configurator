@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     post :live, on: :collection
     member do
       get :battle
+      get :display
     end
   end
 

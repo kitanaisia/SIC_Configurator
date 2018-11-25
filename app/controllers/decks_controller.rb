@@ -1,5 +1,5 @@
 class DecksController < ApplicationController
-  before_action :set_deck, only: [:show, :edit, :update, :destroy, :battle, :to_start]
+  before_action :set_deck, only: [:show, :edit, :update, :destroy, :battle, :to_start, :display]
 
   # GET /decks
   # GET /decks.json
@@ -39,6 +39,9 @@ class DecksController < ApplicationController
   # GET /decks/1
   # GET /decks/1.json
   def show
+  end
+
+  def display
   end
 
   # GET /decks/1/battle

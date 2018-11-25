@@ -14,7 +14,6 @@
   <div style="display:inline-block;vertical-align:top;width:200px;" >
     <div><img src=<%= member.img %>></div>
     <div><%= member.number %> <%= member.name %></div>
-    <div><%= link_to "スタートにする", deck_to_start_path(id: @deck.id, deck_id: @deck.id, number: member.number), method: :post, class: "btn btn-default", type: :button %></div>
   </div>
   <% end %>
 </div>
@@ -27,11 +26,6 @@
     <div><%= music.number %> <%= music.name %></div>
   </div>
   <% end %>
-</div>
-
-<div>
-<%= link_to "対戦よろしくお願いします", battle_deck_path(@deck), class: "btn btn-default" %>
-<%= link_to "デッキ晒し用ページ", display_deck_path(@deck), class: "btn btn-default" %>
 </div>
 
 <br>
