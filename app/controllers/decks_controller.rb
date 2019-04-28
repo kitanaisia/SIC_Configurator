@@ -4,7 +4,7 @@ class DecksController < ApplicationController
   # GET /decks
   # GET /decks.json
   def index
-    @decks = Deck.all
+    @decks = Deck.all.order(:deck_id)
 
     @members= []
     @musics= []
