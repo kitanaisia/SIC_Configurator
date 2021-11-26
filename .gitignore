@@ -17,3 +17,4 @@
 !/log/.keep
 /tmp
 .ruby-version
+config/database.yml
